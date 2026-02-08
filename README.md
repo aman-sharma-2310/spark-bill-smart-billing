@@ -48,16 +48,3 @@ It helps calculate unit consumption, generate bills, and prevent duplicate month
   - VS Code
 
 ---
-
-## 📂 Project Structure
-
-spark-bill/
-│
-├── index.html
-├── style.css
-├── script.js
-├── firebase.js
-├── assets/
-│ └── icons / images
-├── README.md
-└── .gitignore
