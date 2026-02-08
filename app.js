@@ -1,4 +1,5 @@
 // app.js — SparkBill Dark Mode Pro (Firebase Firestore v11 Modular)
+import { db } from "./firebase-config.js";
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-app.js";
 // import { jsPDF } from "https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js";
 import * as XLSX from "https://cdn.jsdelivr.net/npm/xlsx@0.18.5/+esm";
@@ -18,20 +19,7 @@ import {
 
 let tempBillData = null;
 
-// 🧩 Firebase Config
-const firebaseConfig = {
-  apiKey: "AIzaSyDyDC1SLQDf_7YswrbTadP4Q-LbgjsEStw",
-  authDomain: "sparkbill-eb3a4.firebaseapp.com",
-  projectId: "sparkbill-eb3a4",
-  storageBucket: "sparkbill-eb3a4.firebasestorage.app",
-  messagingSenderId: "1031654652067",
-  appId: "1:1031654652067:web:678a0c7f0b60593eb52716",
-};
 
-// 🔥 Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-console.log("✅ Firebase connected");
 // Set default bill date to today
 const billDateInput = document.getElementById("billDateInput");
 if (billDateInput) billDateInput.value = new Date().toISOString().split("T")[0];
