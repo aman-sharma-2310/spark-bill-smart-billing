@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>⚡ SparkBill - Smart Billing</title>
+
+  <!-- Choices.js CSS (searchable select) -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css" />
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <!-- ===== Topbar ===== -->
+  <header class="topbar">
+    <div class="brand">
+      <div class="logo">SB</div>
+      <div>
+        <h1>SparkBill</h1>
+        <div class="tagline">Smart Tenant Billing</div>
+      </div>
+    </div>
+
+    <div class="header-actions">
+      <button class="btn-icon blue" id="refreshBtn" title="Reload">
+        🔄
+      </button>
+      <button class="btn-icon" id="darkModeBtn" title="Toggle Dark Mode">
+        🌙
+      </button>
+    </div>
+
+    <nav class="nav" role="navigation" aria-label="Primary">
+      <button class="active" id="navCalc" onclick="showSection('calc')">Calculator</button>
+      <button id="navAdd" onclick="showSection('add')">Add Tenant</button>
+      <button id="navView" onclick="showSection('view')">View Records</button>
+      <button id="navSettings" onclick="showSection('settings')">Settings</button>
+    </nav>
+  </header>
+
+  <!-- ===== Main Content ===== -->
+  <main class="wrap">
+
+    <!-- LEFT: main area -->
+    <section id="leftArea">
+
+      <!-- 💡 Calculator -->
+      <div id="cardCalc" class="card" style="display:block">
+        <h2>💡 Bill Calculator</h2>
+        <div class="muted">Select tenant, enter current meter reading, and save bill.</div>
+
+        <div style="margin-top:12px">
+          <label class="small">Tenant</label>
+          <select id="tenantSelect">        <!--select tenants-->
+            <option value="">-- Select Tenant --</option>
+          </select>
+        </div>
+
+        <div class="reading-row">
+          <div class="col">
+            <label class="small">Current Reading</label>
+            <input id="curr" type="number" placeholder="e.g. 1234">
+          </div>
+          <div class="col">
+            <label class="small">Unit Rate (₹)</label>
+            <input id="unitPrice" type="number" value="8" placeholder="8">
+          </div>
+        </div>
+        <div class="form-row" style="margin-top:10px;">
+          <div class="col" style="flex:1;">
+            <label class="small">Bill Date</label>
+            <input id="billDateInput" type="date">
+          </div>
+        </div>
+        <div class="cal_save">
+          <button class="action" id="calcBtnDo">Calculate</button>
+          <button class="action" id="saveBtnDo">Save Bill</button>
+        </div>
+
+        <div id="billResult" class="card"
+          style="margin-top:12px; padding:12px; background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);">
+          <!-- result table injected here -->
+        </div>
+      </div>
+
+      <!-- 🏠 Add Tenant -->
+      <div id="cardAdd" class="card" style="display:none">
+        <h2>🏠 Add Tenant</h2>
+        <div class="muted">Create tenant record (room, name, previous reading, rent).</div>
+
+        <div class="form-row" style="margin-top:12px">
+          <input id="room" type="text" placeholder="Room No (e.g. 32)" class="col">
+          <input id="name" type="text" placeholder="Tenant Name" class="col">
+        </div>
+
+        <div class="form-row">
+          <input id="prev" type="number" placeholder="Previous Reading (kWh)" class="col">
+          <input id="rent" type="number" placeholder="Room Rent (₹)" class="col">
+        </div>
+
+        <button class="action" id="addTenantBtn">Add Tenant</button>
+      </div>
+
+      <!-- 📋 View Records -->
+      <div id="cardView" class="card" style="display:none">
+        <h2>📋 View Room Records</h2>
+        <div class="muted">Enter room number to see monthly bills and update payment status.</div>
+
+        <div style="margin-top:12px" class="form-row">
+          <input id="viewRoom" type="text" placeholder="Room No (e.g. 32)" class="col">
+          <div style="display:flex; gap:8px;">
+            <button class="action ghost" id="showRecordsBtn" style="white-space:nowrap;">Show Records</button>
+            <button class="action ghost" id="exportRoomBtn" disabled title="Export room data">📤 Export</button>
+          </div>
+        </div>
+
+
+        <div id="recordsResult" class="scroll-table"></div>
+      </div>
+
+      <!-- ⚙️ Settings -->
+      <div id="cardSettings" class="card" style="display:none">
+        <h2>⚙️ Settings</h2>
+        <div class="muted">Global app settings</div>
+
+        <div style="margin-top:12px">
+          <label class="small">Default Unit Price (₹)</label>
+          <div class="form-row">
+            <input id="unitPriceSettings" type="number" placeholder="8" value="8">
+            <button class="action ghost" id="saveUnitBtn" style="width:140px">Save Rate</button>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- RIGHT: sidebar -->
+    <aside id="rightArea">
+      <div class="card">
+        <h2>📊 Overview
+          (<script>
+            let c_date = new Date();
+            if (c_date.getDate() <9) {
+              c_date.setMonth(c_date.getMonth() - 1);
+              document.write(c_date.toLocaleString('en-US', { month: 'long' }));
+            } else {
+              document.write(c_date.toLocaleString('en-US', { month: 'long' }));
+            }
+          </script>)
+        </h2>
+
+        <div class="muted">Quick stats</div>
+        <div style="display:flex; gap:10px; margin-top:12px; align-items:center;">
+          <div style="flex:1; padding:12px; border-radius:10px; background:rgba(255,255,255,0.02);">
+            <div class="muted">Tenants</div>
+            <div id="statTenants" style="font-size:20px; font-weight:700">—</div>
+          </div>
+          <div style="flex:1; padding:12px; border-radius:10px; background:rgba(255,255,255,0.02);">
+            <div class="muted">Unpaid</div>
+            <div id="statUnpaid" style="font-size:20px; font-weight:700">—</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card tenant-list" style="margin-top:8px;">
+        <h2>🏷️ All Tenants</h2>
+        <input type="text" id="tenantSearch" placeholder="Search tenant...">
+        <div id="tenantList" style="margin-top:5px"></div>
+      </div>
+    </aside>
+  </main>
+
+  <footer>SparkBill · Dark Mode Pro — built for you ⚡</footer>
+
+  <!-- ===== Scripts ===== -->
+  <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
+  <!-- ✅ jsPDF and AutoTable (loaded globally) -->
+  <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jspdf-autotable@3.5.25/dist/jspdf.plugin.autotable.min.js"></script>
+
+  <script>
+    window.showSection = function (section) {
+      document.querySelectorAll('#leftArea > div.card').forEach(c => c.style.display = 'none');
+      document.querySelectorAll('.nav button').forEach(b => b.classList.remove('active'));
+
+      if (section === 'calc') {
+        document.getElementById('cardCalc').style.display = 'block';
+        document.getElementById('navCalc').classList.add('active');
+      } else if (section === 'add') {
+        document.getElementById('cardAdd').style.display = 'block';
+        document.getElementById('navAdd').classList.add('active');
+      } else if (section === 'view') {
+        document.getElementById('cardView').style.display = 'block';
+        document.getElementById('navView').classList.add('active');
+      } else {
+        document.getElementById('cardSettings').style.display = 'block';
+        document.getElementById('navSettings').classList.add('active');
+      }
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+
+    // Theme toggle
+    document.getElementById('darkModeBtn').addEventListener('click', () => {
+      document.body.classList.toggle('light-mode');
+    });
+
+    // Refresh button
+    document.getElementById('refreshBtn').addEventListener('click', () => {
+      if (window.refreshData) window.refreshData();
+      else location.reload();
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+      if (window.Choices) window.tenantChoice = new Choices('#tenantSelect', { shouldSort: false, searchPlaceholderValue: 'Search tenant...' });
+      showSection('calc');
+    });
+  </script>
+
+  <script type="module" src="app.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,584 @@
+/* ===== SparkBill — Responsive Dark Mode Pro (Topbar + Neon Blue) ===== */
+:root {
+  --bg: #0b0f14;
+  --card: #0f1720;
+  --muted: #94a3b8;
+  --text: #e6eef6;
+  --accent: #0ea5ff;
+  --accent-2: #60a5fa;
+  --glass: rgba(255, 255, 255, 0.03);
+  --radius: 12px;
+}
+
+/* Base reset */
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: "Inter", "Segoe UI", Roboto, Arial, sans-serif;
+  background: linear-gradient(180deg, var(--bg), #07101a 120%);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ===== TOPBAR ===== */
+.topbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 18px;
+  background: linear-gradient(90deg, rgba(10, 20, 30, 0.6), rgba(0, 0, 0, 0.3));
+  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(6px);
+  z-index: 100;
+}
+
+/* Brand + Icons align left on mobile */
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* ===== SparkBill Logo ===== */
+.logo {
+  width: 46px;
+  height: 46px;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #021019;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  box-shadow:
+    0 6px 16px rgba(14, 165, 255, 0.3),
+    inset 0 -4px 10px rgba(255, 255, 255, 0.08);
+  letter-spacing: 0.5px;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+  user-select: none;
+  transition: transform 0.2s ease;
+}
+
+.logo:hover {
+  transform: rotate(-3deg) scale(1.05);
+}
+
+.brand h1 {
+  font-size: 16px;
+  margin: 0;
+}
+
+.tagline {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.header-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-left: auto;
+}
+
+/* Navigation bar below brand on mobile */
+.nav {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+
+.nav button {
+  background: transparent;
+  border: none;
+  color: var(--muted);
+  font-weight: 600;
+  padding: 6px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.nav button.active {
+  background: rgba(14, 165, 255, 0.15);
+  color: var(--text);
+  box-shadow: 0 2px 10px rgba(14, 165, 255, 0.15);
+}
+
+/* ===== CONTAINER ===== */
+.wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 16px;
+  max-width: 1100px;
+  margin: auto;
+}
+
+/* ===== CARD ===== */
+.card {
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: var(--radius);
+  padding: 16px;
+  box-shadow: 0 8px 24px rgba(2, 6, 23, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.card h2 {
+  font-size: 18px;
+  margin-bottom: 12px;
+}
+
+/* ===== FORM ELEMENTS ===== */
+input[type="text"],
+input[type="number"],
+select {
+  width: 100%;
+  height: 42px;
+  font-size: 15px;
+  padding: 8px 12px;
+  margin-bottom: 10px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+  color: var(--text);
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+input:focus,
+select:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 10px rgba(14, 165, 255, 0.2);
+}
+
+/* ✨ Bill Calculator spacing improvement */
+#cardCalc label.small {
+  display: block;
+  margin-bottom: 6px;
+}
+
+#cardCalc select,
+#cardCalc input {
+  margin-bottom: 12px;
+}
+
+#cardCalc .reading-row {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+#cardCalc .reading-row .col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ===== BUTTONS ===== */
+.action {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: none;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  color: #021019;
+  font-weight: 700;
+  font-size: 15px;
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.action:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(14, 165, 255, 0.2);
+}
+
+/* ===== BUTTON THEMES ===== */
+.btn-glow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 10px;
+  border: 1px solid rgba(14, 165, 255, 0.15);
+  background: linear-gradient(180deg, rgba(15, 25, 35, 0.85), rgba(10, 15, 25, 0.7));
+  color: var(--text);
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 14px rgba(14, 165, 255, 0.08);
+}
+
+.btn-glow:hover {
+  background: linear-gradient(180deg, rgba(20, 40, 55, 0.9), rgba(14, 165, 255, 0.1));
+  box-shadow: 0 6px 18px rgba(14, 165, 255, 0.25);
+  color: var(--accent-2);
+  transform: translateY(-1px);
+}
+
+.btn-glow.blue {
+  background: linear-gradient(90deg, rgba(14, 165, 255, 0.12), rgba(96, 165, 250, 0.08));
+  border: 1px solid rgba(14, 165, 255, 0.25);
+  color: var(--text);
+}
+
+.btn-glow.blue:hover {
+  background: linear-gradient(90deg, rgba(14, 165, 255, 0.2), rgba(96, 165, 250, 0.15));
+  box-shadow: 0 6px 20px rgba(14, 165, 255, 0.3);
+}
+
+/* Small Icon Buttons */
+.btn-icon {
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  border-radius: 8px;
+  border: 1px solid rgba(14, 165, 255, 0.15);
+  background: rgba(15, 20, 30, 0.9);
+  color: var(--text);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  font-size: 16px;
+}
+
+.btn-icon:hover {
+  background: rgba(14, 165, 255, 0.15);
+  color: var(--accent);
+  transform: scale(1.05);
+  box-shadow: 0 0 12px rgba(14, 165, 255, 0.2);
+}
+
+/* ===== TABLES ===== */
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  text-align: left;
+  padding: 8px;
+  font-size: 13.5px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+th {
+  color: var(--muted);
+  font-weight: 600;
+}
+
+/* Scrollable container for records */
+.scroll-table {
+  overflow: auto;
+  max-height: 350px;
+  margin-top: 10px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* ===== SELECT DROPDOWNS ===== */
+/* select,
+table.records select {
+  background-color: rgba(15, 20, 30, 0.96);
+  color: var(--text);
+  border: 1px solid rgba(14, 165, 255, 0.15);
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-size: 13px;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  cursor: pointer;
+} */
+
+/* select option {
+  background: #0f1720;
+  color: #000;
+  color: var(--text);
+} */
+
+/* select option:hover {
+  background: rgba(14, 165, 255, 0.2);
+  color: var(--accent);
+} */
+/* select option:checked{
+  background: #000;
+  color: black;
+} */
+/* ===== FOOTER ===== */
+footer {
+  text-align: center;
+  color: var(--muted);
+  font-size: 13px;
+  margin: 30px 0;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (min-width: 900px) {
+  .wrap {
+    display: grid;
+    grid-template-columns: 1fr 360px;
+    align-items: flex-start;
+  }
+}
+
+/* ===== MOBILE OPTIMIZATION ===== */
+@media (max-width: 768px) {
+  .topbar {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px;
+  }
+
+  .brand {
+    flex: 1;
+  }
+
+  .header-actions {
+    order: 2;
+    margin-left: 0;
+  }
+
+  .nav {
+    order: 3;
+    width: 100%;
+    justify-content: center;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    padding-top: 8px;
+    margin-top: 8px;
+  }
+
+  .logo {
+    width: 34px;
+    height: 34px;
+    font-size: 14px;
+  }
+
+  .brand h1 {
+    font-size: 15px;
+  }
+
+  .tagline {
+    font-size: 11px;
+  }
+
+  .btn-icon {
+    width: 34px;
+    height: 34px;
+    font-size: 15px;
+  }
+
+  .wrap {
+    padding: 10px;
+  }
+
+  .card {
+    padding: 12px;
+  }
+
+  input,
+  select,
+  button {
+    font-size: 14px !important;
+  }
+
+  table th,
+  table td {
+    padding: 6px 8px;
+    font-size: 12.5px;
+  }
+
+  .tenant-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+
+  .scroll-table {
+    max-height: 280px;
+  }
+}
+
+/* ===== CHOICES.JS DARK FIX ===== */
+.choices__list--dropdown,
+.choices__list--dropdown .choices__list {
+  background: rgba(10, 15, 25, 0.98) !important;
+  border-color: rgba(14, 165, 255, 0.15) !important;
+  border-radius: 10px;
+}
+
+/* 2️⃣ Every item default state */
+.choices__list--dropdown .choices__item {
+  background: rgba(10, 15, 25, 0.98) !important;
+  color: var(--text) !important;
+  border-radius: 10px;
+}
+
+/* 3️⃣ Hover state */
+.choices__list--dropdown .choices__item:hover {
+  background: rgba(14, 165, 255, 0.15) !important;
+  color: var(--accent) !important;
+  border-radius: 10px;
+}
+
+/* 4️⃣ Auto-highlight & keyboard highlight */
+.choices__item.is-highlighted,
+.choices__item.is-focused {
+  background: rgba(14, 165, 255, 0.20) !important;
+  color: var(--accent-2) !important;
+}
+
+/* 5️⃣ Selected item (after click/select) */
+.choices__item.is-selected {
+  background: rgba(14, 165, 255, 0.25) !important;
+  color: var(--accent-2) !important;
+}
+
+/* 6️⃣ Checked / active items (multi-select mode) */
+.choices__item.is-active {
+  background: rgba(14, 165, 255, 0.18) !important;
+  color: var(--accent) !important;
+}
+
+/* 7️⃣ Remove any white from input field inside dropdown */
+.choices__input,
+.choices__input input {
+  background: transparent !important;
+  color: var(--text) !important;
+  border-bottom: 1px solid rgba(14, 165, 255, 0.2) !important;
+  border-radius: 10px !important;
+}
+
+/* 8️⃣ Ensure outer input box also stays dark */
+.choices__inner {
+  background: rgba(15, 20, 30, 0.95) !important;
+  color: var(--text) !important;
+  border: 1px solid rgba(14, 165, 255, 0.2) !important;
+  border-radius: 10px !important;
+}
+
+/* 9️⃣ Remove default blue outline (Chrome/Edge) */
+.choices__inner:focus,
+.choices__input:focus {
+  outline: none !important;
+  box-shadow: 0 0 0 rgba(0, 0, 0, 0) !important;
+}
+
+/* Highlight bill and total rows */
+.highlight-row td,
+.highlight-row th {
+  background: rgba(14, 165, 255, 0.08);
+  color: var(--accent-2);
+  font-weight: 600;
+}
+
+.highlight-total td,
+.highlight-total th {
+  background: linear-gradient(90deg, rgba(14, 165, 255, 0.15), rgba(96, 165, 250, 0.08));
+  color: #fff;
+  font-weight: 700;
+  font-size: 15px;
+  border-top: 1px solid rgba(14, 165, 255, 0.25);
+  border-bottom: 1px solid rgba(14, 165, 255, 0.25);
+}
+
+/* ===== SparkBill Dark Theme — Date Picker ===== */
+input[type="date"] {
+  background: rgba(15, 20, 30, 0.95);
+  color: var(--text);
+  border: 1px solid rgba(14, 165, 255, 0.2);
+  border-radius: 10px;
+  padding: 8px 12px;
+  font-size: 15px;
+  height: 44px;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+/* Glow effect on focus */
+input[type="date"]:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 10px rgba(14, 165, 255, 0.25);
+}
+
+/* ===== Calendar dropdown icon color ===== */
+input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(75%) sepia(60%) saturate(350%) hue-rotate(180deg);
+  cursor: pointer;
+  opacity: 0.8;
+  transition: opacity 0.2s;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator:hover {
+  opacity: 1;
+}
+
+/* ===== Dark mode compatibility for Firefox ===== */
+input[type="date"]::-moz-calendar-picker-indicator {
+  filter: invert(80%) brightness(120%) hue-rotate(180deg);
+}
+
+/* ===== Placeholder text (for unsupported browsers) ===== */
+input[type="date"]::placeholder {
+  color: var(--muted);
+  opacity: 0.8;
+}
+
+/* ===== Compact on mobile ===== */
+@media (max-width: 600px) {
+  input[type="date"] {
+    font-size: 14px;
+    height: 40px;
+  }
+}
+
+/* ===== Tenant List Scroll Behavior ===== */
+#tenantList {
+  max-height: 220px;
+  /* shows ~3 tenants comfortably */
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--accent) transparent;
+  margin-top: 8px;
+  padding-right: 4px;
+}
+
+/* For webkit browsers (Chrome, Edge, Safari) */
+#tenantList::-webkit-scrollbar {
+  width: 6px;
+}
+
+#tenantList::-webkit-scrollbar-thumb {
+  background-color: rgba(14, 165, 255, 0.4);
+  border-radius: 4px;
+}
+
+#tenantList::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(14, 165, 255, 0.6);
+}
+
+#tenantList::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 4px;
+}
+
+.cal_save {
+  display: flex;
+  gap: 10px;
+}
